@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uai Açaí na Garrafa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      background:#07010f;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:
+      radial-gradient(circle at top left, rgba(191,0,255,0.25), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(255,230,0,0.15), transparent 30%),
+      radial-gradient(circle at center, rgba(255,0,140,0.08), transparent 40%);
+      z-index:-1;
+    }
+
+    .navbar{
+      width:100%;
+      padding:20px 8%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      z-index:999;
+      background:rgba(0,0,0,0.35);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .logo img{
+      width:72px;
+      height:72px;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 0 25px rgba(199,0,255,0.5);
+      transition:0.4s;
+    }
+
+    .logo img:hover{
+      transform:scale(1.06) rotate(-2deg);
+    }
+
+    .logo h1{
+      font-size:1.6rem;
+      font-weight:800;
+      line-height:1.1;
+      background:linear-gradient(90deg,#ffe600,#ff00b3,#9d00ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .cart-button{
+      position:relative;
+      background:linear-gradient(135deg,#ff00b3,#7700ff);
+      border:none;
+      color:white;
+      padding:14px 22px;
+      border-radius:18px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 0 25px rgba(183,0,255,0.35);
+      transition:0.3s;
+    }
+
+    .cart-button:hover{
+      transform:translateY(-3px);
+    }
+
+    .cart-count{
+      position:absolute;
+      top:-8px;
+      right:-8px;
+      background:#ffe600;
+      color:#000;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .hero{
+      min-height:90vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      padding:60px 8%;
+      gap:40px;
+    }
+
+    .hero-text h2{
+      font-size:4rem;
+      line-height:1;
+      margin-bottom:20px;
+      font-weight:800;
+    }
+
+    .hero-text h2 span{
+      color:#ffe600;
+      text-shadow:0 0 20px rgba(255,230,0,0.5);
+    }
+
+    .hero-text p{
+      font-size:1.1rem;
+      color:#d5d5d5;
+      margin-bottom:30px;
+      max-width:600px;
+      line-height:1.8;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:16px 28px;
+      border:none;
+      border-radius:18px;
+      cursor:pointer;
+      font-size:1rem;
+      font-weight:600;
+      transition:0.4s;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,#ff00b3,#7b00ff);
+      color:white;
+      box-shadow:0 0 30px rgba(190,0,255,0.35);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-4px) scale(1.02);
+    }
+
+    .btn-secondary{
+      background:transparent;
+      border:2px solid rgba(255,255,255,0.15);
+      color:white;
+    }
+
+    .btn-secondary:hover{
+      border-color:#ffe600;
+      color:#ffe600;
+    }
+
+    .hero-image{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+    }
+
+    .hero-image::before{
+      content:'';
+      width:420px;
+      height:420px;
+      position:absolute;
+      background:radial-gradient(circle, rgba(255,0,162,0.3), transparent 70%);
+      filter:blur(20px);
+      animation:pulse 4s infinite;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(1);opacity:0.8;}
+      50%{transform:scale(1.1);opacity:1;}
+      100%{transform:scale(1);opacity:0.8;}
+    }
+
+    .hero-image img{
+      width:100%;
+      max-width:460px;
+      border-radius:35px;
+      position:relative;
+      z-index:2;
+      box-shadow:0 0 50px rgba(191,0,255,0.35);
+      transition:0.5s;
+    }
+
+    .hero-image img:hover{
+      transform:scale(1.03) rotate(1deg);
+    }
+
+    .products-section{
+      padding:100px 8%;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:60px;
+    }
+
+    .section-title h3{
+      font-size:3rem;
+      font-weight:800;
+      margin-bottom:12px;
+      background:linear-gradient(90deg,#ffe600,#ff00b3);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .section-title p{
+      color:#bcbcbc;
+      font-size:1rem;
+    }
+
+    .products-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:30px;
+    }
+
+    .product-card{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:28px;
+      overflow:hidden;
+      backdrop-filter:blur(14px);
+      transition:0.4s;
+      position:relative;
+    }
+
+    .product-card:hover{
+      transform:translateY(-10px);
+      box-shadow:0 0 35px rgba(191,0,255,0.25);
+      border-color:rgba(255,230,0,0.3);
+    }
+
+    .product-image{
+      width:100%;
+      height:260px;
+      object-fit:cover;
+    }
+
+    .product-content{
+      padding:24px;
+    }
+
+    .product-content h4{
+      font-size:1.4rem;
+      margin-bottom:10px;
+      color:#ffe600;
+    }
+
+    .product-content p{
+      color:#cfcfcf;
+      font-size:0.95rem;
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+
+    .price{
+      font-size:1.8rem;
+      font-weight:800;
+      margin-bottom:20px;
+      color:#ff00b3;
+    }
+
+    .add-btn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:16px;
+      background:linear-gradient(135deg,#ffe600,#ff00b3);
+      color:#000;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .add-btn:hover{
+      transform:scale(1.02);
+      box-shadow:0 0 20px rgba(255,0,179,0.35);
+    }
+
+    .cart-modal{
+      position:fixed;
+      top:0;
+      right:-100%;
+      width:420px;
+      height:100vh;
+      background:#11031f;
+      border-left:1px solid rgba(255,255,255,0.08);
+      z-index:9999;
+      transition:0.5s;
+      padding:30px;
+      overflow-y:auto;
+    }
+
+    .cart-modal.active{
+      right:0;
+    }
+
+    .cart-modal h3{
+      font-size:2rem;
+      margin-bottom:25px;
+      color:#ffe600;
+    }
+
+    .cart-item{
+      background:rgba(255,255,255,0.05);
+      border-radius:18px;
+      padding:16px;
+      margin-bottom:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .cart-item-info h4{
+      margin-bottom:5px;
+    }
+
+    .remove-btn{
+      background:#ff004c;
+      border:none;
+      color:white;
+      width:36px;
+      height:36px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .total{
+      margin-top:25px;
+      font-size:1.5rem;
+      font-weight:700;
+      color:#ffe600;
+    }
+
+    .whatsapp-btn{
+      width:100%;
+      margin-top:20px;
+      padding:18px;
+      border:none;
+      border-radius:18px;
+      background:#25d366;
+      color:white;
+      font-size:1rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .whatsapp-btn:hover{
+      transform:scale(1.02);
+      box-shadow:0 0 25px rgba(37,211,102,0.4);
+    }
+
+    .close-cart{
+      position:absolute;
+      top:20px;
+      right:20px;
+      background:none;
+      border:none;
+      color:white;
+      font-size:2rem;
+      cursor:pointer;
+    }
+
+    footer{
+      padding:40px 8%;
+      text-align:center;
+      border-top:1px solid rgba(255,255,255,0.08);
+      color:#999;
+    }
+
+    @media(max-width:980px){
+      .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+
+      .hero-text h2{
+        font-size:3rem;
+      }
+
+      .hero-buttons{
+        justify-content:center;
+      }
+
+      .cart-modal{
+        width:100%;
+      }
+    }
+
+    @media(max-width:600px){
+      .navbar{
+        padding:20px;
+      }
+
+      .hero{
+        padding:40px 20px;
+      }
+
+      .products-section{
+        padding:70px 20px;
+      }
+
+      .hero-text h2{
+        font-size:2.4rem;
+      }
+
+      .section-title h3{
+        font-size:2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="Uai Açaí na Garrafa">
+      <h1>UAI AÇAÍ<br>NA GARRAFA</h1>
+    </div>
+
+    <button class="cart-button" onclick="toggleCart()">
+      🛒 Carrinho
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h2>
+        O melhor <span>AÇAÍ</span><br>
+        da sua cidade.
+      </h2>
+
+      <p>
+        Sabor intenso, cremosidade absurda e uma experiência visual moderna.
+        Monte seu pedido e envie diretamente pelo WhatsApp em segundos.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="scrollToProducts()">
+          Fazer Pedido
+        </button>
+
+        <button class="btn btn-secondary">
+          Delivery Rápido ⚡
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="logo.png" alt="Uai Açaí">
+    </div>
+  </section>
+
+  <section class="products-section" id="produtos">
+
+    <div class="section-title">
+      <h3>Nosso Cardápio</h3>
+      <p>Escolha um ou mais produtos e envie seu pedido no WhatsApp.</p>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?q=80&w=1200&auto=format&fit=crop" class="product-image">
+
+        <div class="product-content">
+          <h4>Açaí Tradicional</h4>
+          <p>500ml de puro sabor com cobertura premium.</p>
+          <div class="price">R$ 18,90</div>
+
+          <button class="add-btn" onclick="addToCart('Açaí Tradicional',18.90)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1514996937319-344454492b37?q=80&w=1200&auto=format&fit=crop" class="product-image">
+
+        <div class="product-content">
+          <h4>Açaí Especial</h4>
+          <p>Morango, leite condensado, granola e Nutella.</p>
+          <div class="price">R$ 24,90</div>
+
+          <button class="add-btn" onclick="addToCart('Açaí Especial',24.90)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1579954115563-e72bf1381629?q=80&w=1200&auto=format&fit=crop" class="product-image">
+
+        <div class="product-content">
+          <h4>Açaí Supremo</h4>
+          <p>1L completo com toppings ilimitados.</p>
+          <div class="price">R$ 34,90</div>
+
+          <button class="add-btn" onclick="addToCart('Açaí Supremo',34.90)">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="cart-modal" id="cart-modal">
+
+    <button class="close-cart" onclick="toggleCart()">×</button>
+
+    <h3>Seu Pedido</h3>
+
+    <div id="cart-items"></div>
+
+    <div class="total" id="cart-total">
+      Total: R$ 0,00
+    </div>
+
+    <button class="whatsapp-btn" onclick="sendWhatsApp()">
+      Enviar Pedido no WhatsApp
+    </button>
+
+  </div>
+
+  <footer>
+    © 2026 Uai Açaí na Garrafa • Site moderno desenvolvido para chamar atenção 🚀
+  </footer>
+
+  <script>
+
+    const cart = [];
+
+    function scrollToProducts(){
+      document.getElementById('produtos').scrollIntoView({
+        behavior:'smooth'
+      });
+    }
+
+    function toggleCart(){
+      document.getElementById('cart-modal').classList.toggle('active');
+    }
+
+    function addToCart(name, price){
+
+      cart.push({
+        name,
+        price
+      });
+
+      updateCart();
+    }
+
+    function removeItem(index){
+      cart.splice(index,1);
+      updateCart();
+    }
+
+    function updateCart(){
+
+      const cartItems = document.getElementById('cart-items');
+      const cartCount = document.getElementById('cart-count');
+      const cartTotal = document.getElementById('cart-total');
+
+      cartItems.innerHTML = '';
+
+      let total = 0;
+
+      cart.forEach((item,index)=>{
+
+        total += item.price;
+
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <h4>${item.name}</h4>
+              <p>R$ ${item.price.toFixed(2)}</p>
+            </div>
+
+            <button class="remove-btn" onclick="removeItem(${index})">
+              X
+            </button>
+          </div>
+        `;
+      });
+
+      cartCount.innerText = cart.length;
+      cartTotal.innerText = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function sendWhatsApp(){
+
+      if(cart.length === 0){
+        alert('Adicione pelo menos um produto!');
+        return;
+      }
+
+      const phone = '5531999291567';
+
+      let message = '🍧 *NOVO PEDIDO - UAI AÇAÍ* %0A%0A';
+
+      let total = 0;
+
+      cart.forEach((item)=>{
+        message += `• ${item.name} - R$ ${item.price.toFixed(2)} %0A`;
+        total += item.price;
+      });
+
+      message += `%0A💰 *Total:* R$ ${total.toFixed(2)}`;
+      message += `%0A%0A📍 Gostaria de finalizar meu pedido.`;
+
+      window.open(`https://wa.me/${phone}?text=${message}`,'_blank');
+    }
+
+  </script>
+
+</body>
+</html>
